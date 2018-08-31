@@ -5,10 +5,20 @@ import {
 
 class HomeStore {
     @observable title = 'this is home page'
-    @observable list = []
+    @observable state = {
+        fetching:false,
+        error:false,
+        data:[]
+    }
 
     @action async getHomeList(){
-        this.list = await getPoetryList()
+        try{
+            this.state.fetching = true
+            this.state.data = await getPoetryList()
+            this.state.fetching = false
+        }catch(error){
+            this.state.error = true
+        }
     }
 }
  export const homeStore = new HomeStore()

@@ -11,12 +11,14 @@ export default class Home extends React.Component {
         this.props.homeStore.getHomeList()
     }
     render() {
-        const {homeStore:{title,list}} = this.props
+        const {homeStore:{title,state:{data,fetching,error}}} = this.props
         return (
             <div>
+              
                 <p>{title}</p>
                 <Link to="/about">go to About</Link>
-                {list&&list.map(v=><div key={v.author+Math.random()}>{v.author}-{v.poetry_title}-{v.poetry_body}</div>) }
+                {fetching && <div>loading....</div>}
+                {data&&data.map(v=><div key={v.author+Math.random()}>{v.author}-{v.poetry_title}-{v.poetry_body}</div>) }
             </div>
         );
     }
